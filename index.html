@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajesh - Software Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .cursor-follower {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transition: 0.15s;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 30px;
+            object-fit: cover;
+            animation: photoFloat 3s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes photoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s forwards;
+        }
+
+        .hero-content .subtitle {
+            font-size: 24px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+
+        .hero-content .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 1s 0.6s forwards;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: 2px solid #fff;
+            background: transparent;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            color: #667eea;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 100px 50px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 1s;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 48px;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #fff;
+        }
+
+        .experience-grid, .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+            animation: rotate 4s linear infinite;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .card .company {
+            color: #ffd700;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .card .duration {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .skill-tag {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .skill-tag:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .achievements-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .achievement-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .achievement-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-container {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .contact-link {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .contact-link:hover {
+            background: #fff;
+            color: #667eea;
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(180deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero-content h1 {
+                font-size: 48px;
+            }
+
+            .section {
+                padding: 80px 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-follower"></div>
+    
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <nav id="nav">
+        <div class="logo">Portfolio</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#achievements">Achievements</a>
+            <a href="#certifications">Certifications</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <img src="path/to/your/photo.jpg" alt="Rajesh Profile Photo" class="profile-photo" id="profilePhoto">
+            <h1>SANDAKA VENKATA RAJESH</h1>
+            <div class="subtitle">Software Developer | AI Enthusiast | Problem Solver</div>
+            <div class="cta-buttons">
+                <button class="btn" onclick="downloadResume()">Download Resume</button>
+                <button class="btn" onclick="scrollToSection('contact')">Get In Touch</button>
+                <button class="btn" onclick="window.open('https://github.com/svrajesh21', '_blank')">View GitHub</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="experience">
+        <h2 class="section-title">Experience</h2>
+        <div class="experience-grid">
+            <div class="card" onclick="showModal('recruit')">
+                <h3>Software Engineer Intern</h3>
+                <div class="company">Recruit CRM</div>
+                <div class="duration">Oct 2025 - Present</div>
+                <p>Contributing to product development in Solutions Team, mastering TypeScript, React.js, and Agile methodologies.</p>
+            </div>
+            <div class="card" onclick="showModal('edubot')">
+                <h3>Web Development Intern</h3>
+                <div class="company">Edubot</div>
+                <div class="duration">Feb 2025 - Jun 2025</div>
+                <p>Completed intensive training, designed company webpage with Figma, Tailwind CSS, and TypeScript.</p>
+                <button class="btn" style="margin-top: 15px; padding: 10px 20px;" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/1ju8BQXP80ASnRxeSv65hoUAMV5E6Y5FR/view?usp=sharing', '_blank')">View Certificate</button>
+            </div>
+            <div class="card" onclick="showModal('outlier')">
+                <h3>Freelance AI Trainer</h3>
+                <div class="company">Outlier AI</div>
+                <div class="duration">Dec 2024 - Jan 2025</div>
+                <p>Refined 300+ model outputs, crafted 100+ adversarial prompts to test LLM robustness.</p>
+                <button class="btn" style="margin-top: 15px; padding: 10px 20px;" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/127vxhNbwCvrff01H7XhCODd2Fmxns1hy/view?usp=sharing', '_blank')">View Approval</button>
+            </div>
+            <div class="card" onclick="showModal('aicte')">
+                <h3>AI-ML Virtual Intern</h3>
+                <div class="company">AICTE</div>
+                <div class="duration">Oct 2024 - Dec 2024</div>
+                <p>Gained theoretical knowledge and hands-on experience in AI/ML algorithms and applications.</p>
+                <button class="btn" style="margin-top: 15px; padding: 10px 20px;" onclick="event.stopPropagation(); window.open('https://drive.google.com/file/d/127vxhNbwCvrff01H7XhCODd2Fmxns1hy/view?usp=sharing', '_blank')">View Certificate</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="project-grid">
+            <div class="card" onclick="showModal('content2cart')">
+                <h3>CONTENT2CART</h3>
+                <p>Automates product listings across Amazon & Flipkart from social media posts, reducing manual effort by 90%. Built with Python, OpenAI APIs.</p>
+                <button class="btn" style="margin-top: 15px; padding: 10px 20px;" onclick="event.stopPropagation(); window.open('https://github.com/svrajesh21/Content2Cart', '_blank')">View Repository</button>
+            </div>
+            <div class="card" onclick="showModal('virtualclass')">
+                <h3>VIRTUAL CLASSROOMS</h3>
+                <p>Full-stack platform with React.js & MongoDB. Teachers upload classes, track attendance. Students save 30% study time with centralized resources.</p>
+                <button class="btn" style="margin-top: 15px; padding: 10px 20px;" onclick="event.stopPropagation(); window.open('https://github.com/svrajesh21/Virtual-Classrooms', '_blank')">View Repository</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-container">
+            <div class="skill-tag">Python</div>
+            <div class="skill-tag">Java</div>
+            <div class="skill-tag">SQL</div>
+            <div class="skill-tag">JavaScript</div>
+            <div class="skill-tag">TypeScript</div>
+            <div class="skill-tag">React.js</div>
+            <div class="skill-tag">HTML/CSS</div>
+            <div class="skill-tag">Tailwind CSS</div>
+            <div class="skill-tag">MySQL</div>
+            <div class="skill-tag">MongoDB</div>
+            <div class="skill-tag">AWS</div>
+            <div class="skill-tag">ServiceNow</div>
+            <div class="skill-tag">Git/GitHub</div>
+            <div class="skill-tag">Machine Learning</div>
+            <div class="skill-tag">NLP</div>
+            <div class="skill-tag">Prompt Engineering</div>
+            <div class="skill-tag">DSA</div>
+        </div>
+    </section>
+
+    <section class="section" id="achievements">
+        <h2 class="section-title">Achievements & Leadership</h2>
+        <div class="achievements-list">
+            <div class="achievement-item">
+                <strong>🏆 Team Lead at Edubot Internship</strong>
+                <p>Selected among 40 interns to lead the team</p>
+            </div>
+            <div class="achievement-item">
+                <strong>🥇 Top 5 in Prajwalan 2k25</strong>
+                <p>National Level Hackathon demonstrating strong collaboration</p>
+            </div>
+            <div class="achievement-item">
+                <strong>🎓 Academic Topper</strong>
+                <p>Recognized as academic topper in third year, first semester</p>
+            </div>
+            <div class="achievement-item">
+                <strong>🚀 AIR 7755 in Naukri Young Turks 25</strong>
+                <p>98.48 percentile in national aptitude assessment</p>
+            </div>
+            <div class="achievement-item">
+                <strong>💻 200+ LeetCode Problems</strong>
+                <p>5-star rating in Python and SQL on HackerRank</p>
+            </div>
+            <div class="achievement-item">
+                <strong>🤝 Community Service Project Lead</strong>
+                <p>Successfully led team with social responsibility goals</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="certifications">
+        <h2 class="section-title">Certifications</h2>
+        <div class="experience-grid">
+            <div class="card" onclick="window.open('https://drive.google.com/file/d/1l4tIpJMXUdIxt53fuD-9o4NyTjIGv8tU/view?usp=sharing', '_blank')">
+                <h3>Certified System Administrator</h3>
+                <div class="company">ServiceNow</div>
+                <p>Platform administration and configuration expertise</p>
+            </div>
+            <div class="card" onclick="window.open('https://drive.google.com/file/d/1TbYGb7jXDEUUvmwMjkRQk7EMgO2HZHzD/view?usp=sharing', '_blank')">
+                <h3>Certified Application Developer</h3>
+                <div class="company">ServiceNow</div>
+                <p>Advanced application development skills</p>
+            </div>
+            <div class="card" onclick="window.open('https://drive.google.com/file/d/1IrsmIi7iXPsFyeJHMcj1hKGc1R3kDTXD/view?usp=sharing', '_blank')">
+                <h3>Agent Force Specialist</h3>
+                <div class="company">Salesforce</div>
+                <p>Salesforce AI and automation expertise</p>
+            </div>
+            <div class="card" onclick="window.open('https://drive.google.com/file/d/1hp7d2gcRbEsx9PCsyW8EHne7CXnu_kxa/view?usp=sharing', '_blank')">
+                <h3>Generative AI</h3>
+                <div class="company">Oracle</div>
+                <p>AI and machine learning fundamentals</p>
+            </div>
+            <div class="card" onclick="window.open('https://drive.google.com/file/d/1BRYuSKjzS2nxd1CHXVNaqTYU7o9NkwuL/view?usp=sharing', '_blank')">
+                <h3>AWS Cloud Architecting</h3>
+                <div class="company">AWS Academy</div>
+                <p>Cloud architecture and design patterns</p>
+            </div>
+            <div class="card" onclick="window.open('https://drive.google.com/file/d/1qxpAV-ZGlrG6jVvLcgpEyZtHt50Cqkxf/view?usp=sharing', '_blank')">
+                <h3>AWS Cloud Foundations</h3>
+                <div class="company">AWS Academy</div>
+                <p>Core AWS services and infrastructure</p>
+            </div>
+            <div class="card" onclick="window.open('https://drive.google.com/drive/folders/1vxQqh7zlCl63jwXV8jkMPiPNiOSRui1Z?usp=sharing', '_blank')">
+                <h3>Python Essentials</h3>
+                <div class="company">Cisco</div>
+                <p>Python programming fundamentals</p>
+            </div>
+            <div class="card" onclick="window.open('https://drive.google.com/file/d/1AI5fE8T1GN-7GovU5YYXSegE-gmDdbfW/view?usp=sharing', '_blank')">
+                <h3>Git & GitHub</h3>
+                <div class="company">Udemy</div>
+                <p>Version control and collaboration</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-container">
+            <p style="font-size: 20px; margin-bottom: 20px;">I'm always open to discussing new opportunities, innovative projects, or just a friendly chat about technology!</p>
+            <p style="font-size: 18px;">📧 svrajesh21@gmail.com</p>
+            <p style="font-size: 18px;">📱 +91 9704197541</p>
+            <p style="font-size: 18px;">📍 Rajahmundry, Andhra Pradesh</p>
+            <div class="contact-links">
+                <a href="https://linkedin.com/in/s-v-rajesh-126ab4265" target="_blank" class="contact-link" title="LinkedIn">in</a>
+                <a href="https://github.com/svrajesh21" target="_blank" class="contact-link" title="GitHub">GH</a>
+                <a href="https://sv-rajesh-k59174z.gamma.site/" target="_blank" class="contact-link" title="Portfolio">🌐</a>
+                <a href="mailto:svrajesh21@gmail.com" class="contact-link" title="Email">✉</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // Download Resume function
+        function downloadResume() {
+            // Add your resume download link here
+            const resumeLink = 'path/to/your/resume.pdf'; // Replace with actual resume link
+            window.open(resumeLink, '_blank');
+        }
+
+        // Cursor follower
+        const cursorFollower = document.querySelector('.cursor-follower');
+        document.addEventListener('mousemove', (e) => {
+            cursorFollower.style.left = e.clientX + 'px';
+            cursorFollower.style.top = e.clientY + 'px';
+        });
+
+        // Navbar scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = e.target.getAttribute('href').substring(1);
+                scrollToSection(target);
+            });
+        });
+
+        // Intersection Observer for sections
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Modal functionality
+        const modalData = {
+            recruit: {
+                title: 'Software Engineer Internship - Recruit CRM',
+                content: `
+                    <h3>Oct 2025 - Present</h3>
+                    <ul style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <li>Contributing to product development within the Solutions Team</li>
+                        <li>Strengthening expertise in TypeScript and Agile & Scrum methodologies</li>
+                        <li>Following structured Learning Path for React.js, MySQL, Git and GitHub</li>
+                        <li>Hands-on experience with pull requests and code reviews</li>
+                    </ul>
+                `
+            },
+            edubot: {
+                title: 'Web Development Internship - Edubot',
+                content: `
+                    <h3>Feb 2025 - Jun 2025</h3>
+                    <ul style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <li>Completed 4 weeks intensive training in Web Development</li>
+                        <li>Mastered HTML, CSS, JavaScript, and React.js fundamentals</li>
+                        <li>Designed company web page using Figma</li>
+                        <li>Gained hands-on experience with Tailwind CSS and TypeScript</li>
+                        <li>Selected as Team Lead among 40 interns</li>
+                    </ul>
+                `
+            },
+            outlier: {
+                title: 'Freelance AI Trainer - Outlier AI',
+                content: `
+                    <h3>Dec 2024 - Jan 2025</h3>
+                    <ul style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <li>Refined training data for Large Language Models</li>
+                        <li>Corrected 300+ model outputs using feedback mechanisms</li>
+                        <li>Improved NLP capabilities within first month on project</li>
+                        <li>Crafted 100+ adversarial prompts to test model robustness</li>
+                        <li>Uncovered edge cases and failure points in AI models</li>
+                    </ul>
+                `
+            },
+            aicte: {
+                title: 'AI-ML Virtual Internship - AICTE',
+                content: `
+                    <h3>Oct 2024 - Dec 2024</h3>
+                    <ul style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <li>Gained theoretical knowledge in AI and ML algorithms</li>
+                        <li>Explored real-world applications of machine learning</li>
+                        <li>Hands-on experience with various AI frameworks</li>
+                        <li>Completed comprehensive AI/ML curriculum</li>
+                    </ul>
+                `
+            },
+            content2cart: {
+                title: 'CONTENT2CART',
+                content: `
+                    <h3>Project Overview</h3>
+                    <p style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <strong>Problem:</strong> Manual product listing across e-commerce platforms is time-consuming and error-prone.
+                    </p>
+                    <p style="text-align: left; margin-top: 10px; line-height: 1.8;">
+                        <strong>Solution:</strong> Automated system that extracts product details from social media posts and creates listings on Amazon, Flipkart, and other platforms.
+                    </p>
+                    <ul style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <li>Reduces manual effort by 90%</li>
+                        <li>Bridges social media and e-commerce ecosystems</li>
+                        <li>Built with Python and OpenAI APIs</li>
+                        <li>Boosts online presence for sellers</li>
+                    </ul>
+                `
+            },
+            virtualclass: {
+                title: 'VIRTUAL CLASSROOMS',
+                content: `
+                    <h3>Project Overview</h3>
+                    <p style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <strong>Full-Stack Educational Platform</strong>
+                    </p>
+                    <ul style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <li>Built with React.js and MongoDB</li>
+                        <li>Teachers can upload classes, track attendance, manage content</li>
+                        <li>Students find classes, submit assignments, ask queries in one place</li>
+                        <li>Saves up to 30% of manual study time</li>
+                        <li>Centralized platform for entire educational workflow</li>
+                    </ul>
+                `
+            }
+        };
+
+        function showModal(key) {
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modal-body');
+            const data = modalData[key];
+            
+            modalBody.innerHTML = `
+                <h2 style="margin-bottom: 20px;">${data.title}</h2>
+                ${data.content}
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Animated skill tags
+        const skillTags = document.querySelectorAll('.skill-tag');
+        skillTags.forEach((tag, index) => {
+            tag.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Add click effect to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
