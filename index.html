@@ -668,7 +668,8 @@
     <script>
         // Download Resume function
         function downloadResume() {
-            const resumeLink = 'https://drive.google.com/file/d/1vNSdynu-5h9acpE3Vc_PJYthwMEz_U1z/view?usp=sharing';
+            // Add your resume download link here
+            const resumeLink = 'path/to/your/resume.pdf'; // Replace with actual resume link
             window.open(resumeLink, '_blank');
         }
 
@@ -771,4 +772,77 @@
                 content: `
                     <h3>Project Overview</h3>
                     <p style="text-align: left; margin-top: 20px; line-height: 1.8;">
-                        <strong>Problem:
+                        <strong>Problem:</strong> Manual product listing across e-commerce platforms is time-consuming and error-prone.
+                    </p>
+                    <p style="text-align: left; margin-top: 10px; line-height: 1.8;">
+                        <strong>Solution:</strong> Automated system that extracts product details from social media posts and creates listings on Amazon, Flipkart, and other platforms.
+                    </p>
+                    <ul style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <li>Reduces manual effort by 90%</li>
+                        <li>Bridges social media and e-commerce ecosystems</li>
+                        <li>Built with Python and OpenAI APIs</li>
+                        <li>Boosts online presence for sellers</li>
+                    </ul>
+                `
+            },
+            virtualclass: {
+                title: 'VIRTUAL CLASSROOMS',
+                content: `
+                    <h3>Project Overview</h3>
+                    <p style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <strong>Full-Stack Educational Platform</strong>
+                    </p>
+                    <ul style="text-align: left; margin-top: 20px; line-height: 1.8;">
+                        <li>Built with React.js and MongoDB</li>
+                        <li>Teachers can upload classes, track attendance, manage content</li>
+                        <li>Students find classes, submit assignments, ask queries in one place</li>
+                        <li>Saves up to 30% of manual study time</li>
+                        <li>Centralized platform for entire educational workflow</li>
+                    </ul>
+                `
+            }
+        };
+
+        function showModal(key) {
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modal-body');
+            const data = modalData[key];
+            
+            modalBody.innerHTML = `
+                <h2 style="margin-bottom: 20px;">${data.title}</h2>
+                ${data.content}
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Animated skill tags
+        const skillTags = document.querySelectorAll('.skill-tag');
+        skillTags.forEach((tag, index) => {
+            tag.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Add click effect to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
