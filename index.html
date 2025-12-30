@@ -13,15 +13,15 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
-            color: #fff;
+            background: #0F1419;
+            color: #E8E8E8;
             overflow-x: hidden;
         }
 
         .cursor-follower {
             width: 20px;
             height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(0, 217, 255, 0.8);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -38,14 +38,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(15, 20, 25, 0.3);
             backdrop-filter: blur(10px);
             z-index: 1000;
             transition: 0.3s;
         }
 
         nav.scrolled {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(15, 20, 25, 0.7);
         }
 
         .logo {
@@ -63,7 +63,7 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.3);
+            border: 5px solid rgba(0, 217, 255, 0.3);
             margin-bottom: 30px;
             object-fit: cover;
             animation: photoFloat 3s ease-in-out infinite;
@@ -81,7 +81,7 @@
         }
 
         .nav-links a {
-            color: #fff;
+            color: #E8E8E8;
             text-decoration: none;
             font-size: 16px;
             transition: 0.3s;
@@ -95,7 +95,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #fff;
+            background: #00D9FF;
             transition: 0.3s;
         }
 
@@ -136,9 +136,9 @@
 
         .btn {
             padding: 15px 40px;
-            border: 2px solid #fff;
+            border: 2px solid #00D9FF;
             background: transparent;
-            color: #fff;
+            color: #E8E8E8;
             font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
@@ -153,7 +153,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: #fff;
+            background: #00D9FF;
             transition: 0.5s;
             z-index: -1;
         }
@@ -163,7 +163,7 @@
         }
 
         .btn:hover {
-            color: #FF512F;
+            color: #0F1419;
         }
 
         .section {
@@ -196,7 +196,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 3px;
-            background: #fff;
+            background: #00D9FF;
         }
 
         .experience-grid, .project-grid {
@@ -208,7 +208,7 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 217, 255, 0.1);
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
@@ -225,7 +225,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
             opacity: 0;
             transition: 0.5s;
         }
@@ -246,7 +246,7 @@
         }
 
         .card .company {
-            color: #ffd700;
+            color: #00D9FF;
             font-size: 14px;
             margin-bottom: 15px;
         }
@@ -268,7 +268,7 @@
 
         .skill-tag {
             padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 217, 255, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 25px;
             transition: 0.3s;
@@ -276,7 +276,7 @@
         }
 
         .skill-tag:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(0, 217, 255, 0.3);
             transform: scale(1.1) rotate(5deg);
         }
 
@@ -286,19 +286,19 @@
         }
 
         .achievement-item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 217, 255, 0.1);
             backdrop-filter: blur(10px);
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 10px;
-            border-left: 4px solid #ffd700;
+            border-left: 4px solid #00D9FF;
             transition: 0.3s;
             cursor: pointer;
         }
 
         .achievement-item:hover {
             transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 217, 255, 0.2);
         }
 
         .contact-container {
@@ -317,7 +317,7 @@
         .contact-link {
             width: 60px;
             height: 60px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 217, 255, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 50%;
             display: flex;
@@ -326,13 +326,13 @@
             transition: 0.3s;
             cursor: pointer;
             text-decoration: none;
-            color: #fff;
+            color: #E8E8E8;
             font-size: 24px;
         }
 
         .contact-link:hover {
-            background: #fff;
-            color: #FF512F;
+            background: #00D9FF;
+            color: #0F1419;
             transform: scale(1.2) rotate(360deg);
         }
 
@@ -348,7 +348,7 @@
 
         .shape {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 217, 255, 0.1);
             border-radius: 50%;
             animation: float 15s infinite ease-in-out;
         }
@@ -413,13 +413,14 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+            background: #0F1419;
             padding: 40px;
             border-radius: 20px;
             max-width: 600px;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
+            border: 2px solid #00D9FF;
         }
 
         .close-modal {
@@ -429,6 +430,7 @@
             font-size: 30px;
             cursor: pointer;
             transition: 0.3s;
+            color: #00D9FF;
         }
 
         .close-modal:hover {
